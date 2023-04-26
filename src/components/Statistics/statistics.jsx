@@ -1,31 +1,28 @@
 import css from './statistics.module.css';
 import PropTypes from 'prop-types';
-export const Statistics = ({ title, stats }) => {
-  return (
-    <section className={css.statistics}>
-      <h2 className={css.title}>{title}</h2>
 
-      <ul className={css.statlist}>
-        <li className={css.item}>
-          <span className="label">.docx</span>
-          <span className="percentage">4%</span>
+const getRandomColor = () =>
+  '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+export const Statistics = ({ title, stats }) => (
+  <section className={css.statistics}>
+    {title && <h2 className={css.title}>{title}</h2>}
+
+    <ul className={css.statlist}>
+      {stats.map(({ id, label, percentage }) => (
+        <li
+          key={id}
+          className={css.item}
+          style={{ backgroundColor: getRandomColor() }}
+        >
+          <span className={css.label}>{label}</span>
+          <span className={css.percentage}>{percentage}%</span>
         </li>
-        <li className={css.item}>
-          <span className="label">.mp3</span>
-          <span className="percentage">14%</span>
-        </li>
-        <li className={css.item}>
-          <span className="label">.pdf</span>
-          <span className="percentage">41%</span>
-        </li>
-        <li className={css.item}>
-          <span className="label">.mp4</span>
-          <span className="percentage">12%</span>
-        </li>
-      </ul>
-    </section>
-  );
-};
+      ))}
+    </ul>
+  </section>
+);
+
 Statistics.propTypes = {
   stats: PropTypes.arrayOf(
     PropTypes.shape({
